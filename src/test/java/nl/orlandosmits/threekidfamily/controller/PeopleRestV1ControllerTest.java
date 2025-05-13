@@ -57,7 +57,7 @@ class PeopleRestV1ControllerTest {
                                    "partner"   :  {  "id":  99 },
                                    "children"  :  [{ "id":  77}, { "id": 78}]
                                 }"""))
-                .andExpect(status().is(444));
+                .andExpect(status().isOk());
 
     }
 }
