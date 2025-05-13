@@ -1,5 +1,5 @@
 package nl.orlandosmits.threekidfamily.dto;
 
-public record PostPeopleResponse() {
+public record PartnerDto(Integer id) {
 
 }

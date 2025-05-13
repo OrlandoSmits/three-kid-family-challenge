@@ -1,12 +1,16 @@
 package nl.orlandosmits.threekidfamily.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import nl.orlandosmits.threekidfamily.domain.Person;
+import nl.orlandosmits.threekidfamily.mapper.PersonMapper;
 import nl.orlandosmits.threekidfamily.service.PeopleService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,11 +23,17 @@ class PeopleRestV1ControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
+    private PersonMapper personMapper;
+
+    @MockitoBean
     private PeopleService peopleService;
 
     @Test
     void postPerson_doesNotSatisfyThePattern() throws Exception {
-        Mockito.when(peopleService.isValidPerson()).thenReturn(false);
+        Person person = mock(Person.class);
+
+        when(personMapper.mapFrom(any())).thenReturn(person);
+        when(peopleService.isValidPerson(any(Person.class))).thenReturn(false);
 
         mockMvc.perform(post("/api/v1/people")
                         .contentType(APPLICATION_JSON)
@@ -43,7 +53,10 @@ class PeopleRestV1ControllerTest {
 
     @Test
     void postPerson_doesSatisfyThePattern() throws Exception {
-        Mockito.when(peopleService.isValidPerson()).thenReturn(true);
+        Person person = mock(Person.class);
+
+        when(personMapper.mapFrom(any())).thenReturn(person);
+        when(peopleService.isValidPerson(any(Person.class))).thenReturn(true);
 
         mockMvc.perform(post("/api/v1/people")
                         .contentType(APPLICATION_JSON)
