@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import nl.orlandosmits.threekidfamily.domain.Person;
-import nl.orlandosmits.threekidfamily.mapper.PersonMapper;
+import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
 import nl.orlandosmits.threekidfamily.service.PeopleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +23,13 @@ class PeopleRestV1ControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private PersonMapper personMapper;
-
-    @MockitoBean
     private PeopleService peopleService;
 
     @Test
     void postPerson_doesNotSatisfyThePattern() throws Exception {
         Person person = mock(Person.class);
 
-        when(personMapper.mapFrom(any())).thenReturn(person);
+        when(peopleService.getPerson(any(PeopleRequestDto.class))).thenReturn(person);
         when(peopleService.isValidPerson(any(Person.class))).thenReturn(false);
 
         mockMvc.perform(post("/api/v1/people")
@@ -55,7 +52,7 @@ class PeopleRestV1ControllerTest {
     void postPerson_doesSatisfyThePattern() throws Exception {
         Person person = mock(Person.class);
 
-        when(personMapper.mapFrom(any())).thenReturn(person);
+        when(peopleService.getPerson(any(PeopleRequestDto.class))).thenReturn(person);
         when(peopleService.isValidPerson(any(Person.class))).thenReturn(true);
 
         mockMvc.perform(post("/api/v1/people")
