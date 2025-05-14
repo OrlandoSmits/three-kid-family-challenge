@@ -15,13 +15,16 @@ public class PersonValidator {
 		return person.hasPartner();
 	}
 
-	public boolean hasThreeChildrenWithSameMotherAndFather(Person person) {
+	public boolean hasThreeChildrenWithPartnerAsParent(Person person) {
 		if (person == null) {
 			return false;
 		}
 
-		// TODO: Implement
-		return true;
+		if (!person.hasExactlyThreeChildren()) {
+			return false;
+		}
+
+		return person.allThreeChildrenHavePartnerAsMotherOrFather();
 	}
 
 	public boolean hasOneChildUnderEighteen(Person person) {

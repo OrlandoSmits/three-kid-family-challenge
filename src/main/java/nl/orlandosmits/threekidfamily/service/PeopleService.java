@@ -31,7 +31,7 @@ public class PeopleService {
         return personRepository.findAll().stream()
 				.map(personMapper::mapFrom)
 				.filter(personValidator::hasPartner)
-				.filter(personValidator::hasThreeChildrenWithSameMotherAndFather)
+				.filter(personValidator::hasThreeChildrenWithPartnerAsParent)
                 .anyMatch(personValidator::hasOneChildUnderEighteen);
     }
 
