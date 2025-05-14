@@ -24,8 +24,8 @@ public class PersonMapper {
                 .id(peopleRequestDto.id())
                 .name(peopleRequestDto.name())
                 .birthDate(peopleRequestDto.birthDate())
-                .parent1(parentMapper.mapParent1From(peopleRequestDto).orElse(null))
-                .parent2(parentMapper.mapParent2From(peopleRequestDto).orElse(null))
+                .parent1(parentMapper.mapParent1From(peopleRequestDto))
+                .parent2(parentMapper.mapParent2From(peopleRequestDto))
                 .partner(partnerMapper.mapFrom(peopleRequestDto))
                 .children(childMapper.mapAllFrom(peopleRequestDto))
                 .build();

@@ -1,6 +1,5 @@
 package nl.orlandosmits.threekidfamily.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import nl.orlandosmits.threekidfamily.domain.Person;
 import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
 import nl.orlandosmits.threekidfamily.dto.response.PostPeopleResponseDto;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/people")
 public class PeopleRestV1Controller {
@@ -28,8 +26,6 @@ public class PeopleRestV1Controller {
 
         peopleService.saveOrUpdate(person);
         boolean validPerson = peopleService.anyPersonIsValid();
-
-        log.info("Person {} is valid? {}", person.getName(), validPerson);
 
         if (validPerson) {
             return ResponseEntity.ok(new PostPeopleResponseDto());

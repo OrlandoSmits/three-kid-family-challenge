@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PersonValidator {
-
+    
     public boolean hasPartner(Person person) {
         if (person == null) {
             return false;

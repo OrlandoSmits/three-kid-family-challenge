@@ -20,13 +20,6 @@ public class ChildMapper {
         this.personRepository = personRepository;
     }
 
-    private Child mapFrom(ChildDto childDto) {
-        return Child.builder()
-                .id(childDto.id())
-                .parent1Id(childDto.id())
-                .build();
-    }
-
     public List<Child> mapAllFrom(PeopleRequestDto peopleRequestDto) {
         if (peopleRequestDto.children().isEmpty()) {
             return new ArrayList<>();
@@ -36,16 +29,6 @@ public class ChildMapper {
                 .map(this::mapFrom)
                 .toList();
     }
-
-    private Child mapFrom(PersonEntity personEntity) {
-        return Child.builder()
-                .id(personEntity.getId())
-                .birthDate(personEntity.getBirthDate())
-                .parent1Id(personEntity.getParent1Id())
-                .parent2Id(personEntity.getParent2Id())
-                .build();
-    }
-
 
     public List<Child> mapAllFrom(PersonEntity personEntity) {
         if (Objects.isNull(personEntity.getChildrenIds())) {
@@ -59,6 +42,22 @@ public class ChildMapper {
                 .map(Optional::get)
                 .map(this::mapFrom)
                 .toList();
+    }
+
+    private Child mapFrom(PersonEntity personEntity) {
+        return Child.builder()
+                .id(personEntity.getId())
+                .birthDate(personEntity.getBirthDate())
+                .parent1Id(personEntity.getParent1Id())
+                .parent2Id(personEntity.getParent2Id())
+                .build();
+    }
+
+    private Child mapFrom(ChildDto childDto) {
+        return Child.builder()
+                .id(childDto.id())
+                .parent1Id(childDto.id())
+                .build();
     }
 
 }

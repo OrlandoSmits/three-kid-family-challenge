@@ -53,6 +53,11 @@ public class Person {
         return children.size() == 3;
     }
 
+    /**
+     * A person with three children should have the same father.
+     *
+     * @return True if all three children have the same partner as mother or father..
+     */
     public boolean allThreeChildrenHavePartnerAsMotherOrFather() {
         if (children.isEmpty()) {
             return false;
