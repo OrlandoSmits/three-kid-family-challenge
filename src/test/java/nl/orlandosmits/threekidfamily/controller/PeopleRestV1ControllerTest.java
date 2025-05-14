@@ -13,6 +13,7 @@ import nl.orlandosmits.threekidfamily.service.PeopleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -56,6 +57,85 @@ class PeopleRestV1ControllerTest {
         when(peopleService.isValidPerson(any(Person.class))).thenReturn(true);
 
         mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  1,
+                           "name"      :  "Pada Lovelace",
+                           "birthDate" : "1799-12-10",
+                           "parent1"   :  { },
+                           "parent2"   :  { },
+                           "partner"   :  {  "id":  2 },
+                           "children"  :  [{ "id":  42}]
+                        }"""));
+
+        mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  2,
+                           "name"      :  "Mada Lovelace",
+                           "birthDate" : "1799-12-10",
+                           "parent1"   :  { },
+                           "parent2"   :  { },
+                           "partner"   :  {  "id":  1 },
+                           "children"  :  [{ "id":  42}]
+                        }"""));
+
+        mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  77,
+                           "name"      :  "Chad Lovelace",
+                           "birthDate" : "1840-12-10",
+                           "parent1"   :  {  "id": 42 },
+                           "parent2"   :  {  "id": 99 },
+                           "partner"   :  {  "id":  1 },
+                           "children"  :  [{ "id":  42}]
+                        }"""));
+
+        mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  78,
+                           "name"      :  "Brad Lovelace",
+                           "birthDate" : "1842-12-10",
+                           "parent1"   :  {  "id": 42 },
+                           "parent2"   :  {  "id": 99 },
+                           "partner"   :  {  "id":  1 },
+                           "children"  :  [{ "id":  42}]
+                        }"""));
+
+        mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  79,
+                           "name"      :  "Peter Lovelace",
+                           "birthDate" : "1844-12-10",
+                           "parent1"   :  {  "id": 42 },
+                           "parent2"   :  {  "id": 99 },
+                           "partner"   :  {  "id":  1 },
+                           "children"  :  [{ "id":  42}]
+                        }"""));
+
+        mockMvc.perform(post("/api/v1/people")
+                .contentType(APPLICATION_JSON)
+                .content("""  
+                         {
+                           "id"        :  99,
+                           "name"      :  "John Lovelace",
+                           "birthDate" : "1815-12-10",
+                           "parent1"   :  { },
+                           "parent2"   :  { },
+                           "partner"   :  {  "id":  42 },
+                           "children"  :  [{ "id":  77}, { "id": 78}, { "id": 79}]
+                        }"""));
+
+
+        mockMvc.perform(post("/api/v1/people")
                         .contentType(APPLICATION_JSON)
                         .content("""  
                                  {
@@ -65,7 +145,7 @@ class PeopleRestV1ControllerTest {
                                    "parent1"   :  {  "id": 1 },
                                    "parent2"   :  {  "id": 2 },
                                    "partner"   :  {  "id":  99 },
-                                   "children"  :  [{ "id":  77}, { "id": 78}]
+                                   "children"  :  [{ "id":  77}, { "id": 78}, { "id": 79}]
                                 }"""))
                 .andExpect(status().isOk());
 

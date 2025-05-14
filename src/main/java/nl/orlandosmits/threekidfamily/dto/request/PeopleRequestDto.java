@@ -7,7 +7,7 @@ import nl.orlandosmits.threekidfamily.dto.ParentDto;
 import nl.orlandosmits.threekidfamily.dto.PartnerDto;
 
 public record PeopleRequestDto(
-        int id,
+        long id,
         String name,
         LocalDate birthDate,
         ParentDto parent1,
@@ -16,4 +16,11 @@ public record PeopleRequestDto(
         List<ChildDto> children
 ) {
 
+    public boolean hasParent1() {
+        return parent1.id() != null;
+    }
+
+    public boolean hasParent2() {
+        return parent2.id() != null;
+    }
 }

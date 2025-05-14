@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class Partner {
+public class Parent {
+
     private Long id;
 }

@@ -15,7 +15,18 @@ public class Person {
 
     private Partner partner;
 
+    private Parent parent1;
+    private Parent parent2;
+
     public boolean hasPartner() {
         return partner != null;
+    }
+    
+    public boolean hasParent1() {
+        return parent1 != null;
+    }
+    
+    public boolean hasParent2() {
+        return parent2 != null;
     }
 }

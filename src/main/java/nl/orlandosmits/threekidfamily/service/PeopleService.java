@@ -1,9 +1,13 @@
 package nl.orlandosmits.threekidfamily.service;
 
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import nl.orlandosmits.threekidfamily.domain.Person;
 import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
+import nl.orlandosmits.threekidfamily.entity.PersonEntity;
+import nl.orlandosmits.threekidfamily.mapper.PersonEntityMapper;
 import nl.orlandosmits.threekidfamily.mapper.PersonMapper;
+import nl.orlandosmits.threekidfamily.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -11,9 +15,14 @@ import org.springframework.stereotype.Service;
 public class PeopleService {
 
     private final PersonMapper personMapper;
+    private final PersonEntityMapper personEntityMapper;
+    private final PersonRepository personRepository;
 
-    public PeopleService(PersonMapper personMapper) {
+    public PeopleService(PersonMapper personMapper, PersonEntityMapper personEntityMapper,
+            PersonRepository personRepository) {
         this.personMapper = personMapper;
+        this.personEntityMapper = personEntityMapper;
+        this.personRepository = personRepository;
     }
 
     /**
@@ -38,5 +47,12 @@ public class PeopleService {
 
     public Person getPerson(PeopleRequestDto peopleRequestDto) {
         return personMapper.mapFrom(peopleRequestDto);
+    }
+
+    public void saveOrUpdate(Person person) {
+        Optional<PersonEntity> optionalPerson = personRepository.findById(person.getId());
+
+        PersonEntity personEntity1 = personEntityMapper.mapFrom(person);
+        personRepository.save(personEntity1);
     }
 }

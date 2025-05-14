@@ -6,6 +6,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import nl.orlandosmits.threekidfamily.domain.Parent;
 import nl.orlandosmits.threekidfamily.domain.Partner;
 import nl.orlandosmits.threekidfamily.domain.Person;
 import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
@@ -42,7 +43,7 @@ class PeopleServiceTest {
 
     @Test
     void isValidPerson() {
-        Person person = new Person(1L, "John", new Partner());
+        Person person = new Person(1L, "John", new Partner(2L), new Parent(3L), new Parent(4L));
 
         boolean result = peopleService.isValidPerson(person);
 
@@ -51,7 +52,7 @@ class PeopleServiceTest {
 
     @Test
     void isValidPerson_hasNoPartner() {
-        Person person = new Person(1L, "John", null);
+        Person person = new Person(1L, "John", null, new Parent(3L), new Parent(4L));
 
         boolean result = peopleService.isValidPerson(person);
 

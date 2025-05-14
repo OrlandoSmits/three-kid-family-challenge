@@ -1,5 +1,5 @@
 package nl.orlandosmits.threekidfamily.dto;
 
-public record ChildDto(Integer id) {
+public record ChildDto(Long id) {
 
 }

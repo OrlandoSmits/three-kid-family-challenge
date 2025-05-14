@@ -22,8 +22,9 @@ public class PeopleRestV1Controller {
 
     @PostMapping
     public ResponseEntity<PostPeopleResponseDto> postPeople(@RequestBody PeopleRequestDto peopleRequestDto) {
-
         Person person = peopleService.getPerson(peopleRequestDto);
+        
+        peopleService.saveOrUpdate(person);
         boolean validPerson = peopleService.isValidPerson(person);
 
         if (validPerson) {
