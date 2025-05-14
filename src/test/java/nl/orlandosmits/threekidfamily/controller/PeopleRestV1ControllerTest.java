@@ -7,15 +7,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import nl.orlandosmits.threekidfamily.domain.Person;
-import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
-import nl.orlandosmits.threekidfamily.service.PeopleService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import nl.orlandosmits.threekidfamily.domain.Person;
+import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
+import nl.orlandosmits.threekidfamily.service.PeopleService;
 
 @WebMvcTest(PeopleRestV1Controller.class)
 class PeopleRestV1ControllerTest {
@@ -31,7 +31,7 @@ class PeopleRestV1ControllerTest {
         Person person = mock(Person.class);
 
         when(peopleService.getPerson(any(PeopleRequestDto.class))).thenReturn(person);
-        when(peopleService.isValidPerson(any(Person.class))).thenReturn(false);
+        when(peopleService.anyPersonIsValid()).thenReturn(false);
 
         mockMvc.perform(post("/api/v1/people")
                         .contentType(APPLICATION_JSON)
@@ -54,7 +54,7 @@ class PeopleRestV1ControllerTest {
         Person person = mock(Person.class);
 
         when(peopleService.getPerson(any(PeopleRequestDto.class))).thenReturn(person);
-        when(peopleService.isValidPerson(any(Person.class))).thenReturn(true);
+        when(peopleService.anyPersonIsValid()).thenReturn(true);
 
         mockMvc.perform(post("/api/v1/people")
                 .contentType(APPLICATION_JSON)

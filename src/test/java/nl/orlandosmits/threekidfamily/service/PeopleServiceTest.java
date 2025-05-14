@@ -40,23 +40,4 @@ class PeopleServiceTest {
 
         verify(personMapper, times(1)).mapFrom(peopleRequestDto);
     }
-
-    @Test
-    void isValidPerson() {
-        Person person = new Person(1L, "John", new Partner(2L), new Parent(3L), new Parent(4L));
-
-        boolean result = peopleService.isValidPerson(person);
-
-        assertThat(result).isTrue();
-    }
-
-    @Test
-    void isValidPerson_hasNoPartner() {
-        Person person = new Person(1L, "John", null, new Parent(3L), new Parent(4L));
-
-        boolean result = peopleService.isValidPerson(person);
-
-        assertThat(result).isFalse();
-    }
-
 }
