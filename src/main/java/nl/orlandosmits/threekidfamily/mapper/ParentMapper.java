@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class ParentMapper {
 
     public Optional<Parent> mapParent1From(PeopleRequestDto peopleRequestDto) {
-        if (!peopleRequestDto.hasParent2()) {
+        if (!peopleRequestDto.hasParent1()) {
             return Optional.empty();
         }
 

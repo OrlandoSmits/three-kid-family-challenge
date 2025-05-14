@@ -50,8 +50,6 @@ public class PeopleService {
     }
 
     public void saveOrUpdate(Person person) {
-        Optional<PersonEntity> optionalPerson = personRepository.findById(person.getId());
-
         PersonEntity personEntity1 = personEntityMapper.mapFrom(person);
         personRepository.save(personEntity1);
     }

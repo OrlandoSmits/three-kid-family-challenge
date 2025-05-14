@@ -3,17 +3,20 @@ package nl.orlandosmits.threekidfamily.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Builder
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Person")
@@ -28,13 +31,10 @@ public class PersonEntity {
     
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private PersonEntity partner;
+    private Long partnerId;
 
-    @ManyToOne
-    private PersonEntity parent1;
+    private Long parent1Id;
 
-    @ManyToOne
-    private PersonEntity parent2;
+    private Long parent2Id;
 
 }

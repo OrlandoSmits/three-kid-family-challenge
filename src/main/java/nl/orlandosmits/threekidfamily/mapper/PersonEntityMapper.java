@@ -1,59 +1,38 @@
 package nl.orlandosmits.threekidfamily.mapper;
 
-import java.util.Optional;
+import org.springframework.stereotype.Component;
+
 import nl.orlandosmits.threekidfamily.domain.Person;
 import nl.orlandosmits.threekidfamily.entity.PersonEntity;
 import nl.orlandosmits.threekidfamily.repository.PersonRepository;
-import org.springframework.stereotype.Component;
 
 @Component
 public class PersonEntityMapper {
 
-    private final PersonRepository personRepository;
+	private final PersonRepository personRepository;
 
-    public PersonEntityMapper(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
+	public PersonEntityMapper(PersonRepository personRepository) {
+		this.personRepository = personRepository;
+	}
 
-    public PersonEntity mapFrom(Person person) {
-        PersonEntity personEntity = PersonEntity.builder()
-                .id(person.getId())
-                .name(person.getName())
-                .build();
+	public PersonEntity mapFrom(Person person) {
+		PersonEntity entity = personRepository.findById(person.getId())
+				.orElse(new PersonEntity(person.getId()));
 
-        if (person.hasPartner()) {
-            Long partnerId = person.getPartner().getId();
-            PersonEntity partner = getPerson(partnerId);
-            personEntity.setPartner(partner);
-        }
+		entity.setName(person.getName());
 
-        if (person.hasParent1()) {
-            Long parent1Id = person.getParent1().getId();
-            PersonEntity parent1 = getPerson(parent1Id);
-            personEntity.setParent1(parent1);
-        }
+		if (person.hasPartner()) {
+			entity.setPartnerId(person.getPartner().getId());
+		}
 
-        if (person.hasParent2()) {
-            Long parent2Id = person.getParent2().getId();
-            PersonEntity parent2 = getPerson(parent2Id);
-            personEntity.setParent2(parent2);
-        }
+		if (person.hasParent1()) {
+			entity.setParent1Id(person.getParent1().getId());
+		}
 
-        return personEntity;
-    }
+		if (person.hasParent2()) {
+			entity.setParent2Id(person.getParent2().getId());
+		}
 
-    private PersonEntity getPerson(Long personId) {
-        PersonEntity parent;
-
-        Optional<PersonEntity> optionalPerson = personRepository.findById(personId);
-
-        if (optionalPerson.isPresent()) {
-            parent = optionalPerson.get();
-        } else {
-            parent = new PersonEntity(personId);
-            personRepository.save(parent);
-        }
-
-        return parent;
-    }
+		return entity;
+	}
 }
