@@ -1,39 +1,37 @@
 package nl.orlandosmits.threekidfamily.service;
 
-import org.springframework.stereotype.Component;
-
 import nl.orlandosmits.threekidfamily.domain.Person;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PersonValidator {
 
-	public boolean hasPartner(Person person) {
-		if (person == null) {
-			return false;
-		}
+    public boolean hasPartner(Person person) {
+        if (person == null) {
+            return false;
+        }
 
-		return person.hasPartner();
-	}
+        return person.hasPartner();
+    }
 
-	public boolean hasThreeChildrenWithPartnerAsParent(Person person) {
-		if (person == null) {
-			return false;
-		}
+    public boolean hasThreeChildrenWithPartnerAsParent(Person person) {
+        if (person == null) {
+            return false;
+        }
 
-		if (!person.hasExactlyThreeChildren()) {
-			return false;
-		}
+        if (!person.hasExactlyThreeChildren()) {
+            return false;
+        }
 
-		return person.allThreeChildrenHavePartnerAsMotherOrFather();
-	}
+        return person.allThreeChildrenHavePartnerAsMotherOrFather();
+    }
 
-	public boolean hasOneChildUnderEighteen(Person person) {
-		if (person == null) {
-			return false;
-		}
+    public boolean hasOneChildUnderEighteen(Person person) {
+        if (person == null) {
+            return false;
+        }
 
-		// TODO: Implement
-		return true;
-	}
+        return person.oneChildIsUnderEighteen();
+    }
 
 }

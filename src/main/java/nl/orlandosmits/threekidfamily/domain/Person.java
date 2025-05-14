@@ -1,9 +1,9 @@
 package nl.orlandosmits.threekidfamily.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,15 +15,16 @@ public class Person {
 
     private Long id;
     private String name;
+    private LocalDate birthDate;
     private Partner partner;
     private Parent parent1;
     private Parent parent2;
     private List<Child> children = new ArrayList<>();
-    
+
     public boolean hasPartner() {
         return partner != null;
     }
-    
+
     public boolean hasParent1() {
         return parent1 != null;
     }
@@ -32,12 +33,20 @@ public class Person {
         return parent2 != null;
     }
 
+    public boolean hasChildren() {
+        return !children.isEmpty();
+    }
+
+    public List<Long> getChildrenIds() {
+        return children.stream().map(Child::getId).collect(Collectors.toList());
+    }
+
     public boolean hasExactlyThreeChildren() {
         if (this.children == null) {
             return false;
         }
 
-        if(this.children.isEmpty()) {
+        if (this.children.isEmpty()) {
             return false;
         }
 
@@ -45,7 +54,7 @@ public class Person {
     }
 
     public boolean allThreeChildrenHavePartnerAsMotherOrFather() {
-        if(children.isEmpty()) {
+        if (children.isEmpty()) {
             return false;
         }
 
@@ -58,7 +67,8 @@ public class Person {
     }
 
     public boolean oneChildIsUnderEighteen() {
-        return false;
+        return this.children.stream()
+                .anyMatch(Child::isUnderEighteen);
     }
 
 }

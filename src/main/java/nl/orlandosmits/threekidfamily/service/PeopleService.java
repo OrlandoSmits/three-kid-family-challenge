@@ -1,7 +1,5 @@
 package nl.orlandosmits.threekidfamily.service;
 
-import org.springframework.stereotype.Service;
-
 import lombok.extern.slf4j.Slf4j;
 import nl.orlandosmits.threekidfamily.domain.Person;
 import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
@@ -9,6 +7,7 @@ import nl.orlandosmits.threekidfamily.entity.PersonEntity;
 import nl.orlandosmits.threekidfamily.mapper.PersonEntityMapper;
 import nl.orlandosmits.threekidfamily.mapper.PersonMapper;
 import nl.orlandosmits.threekidfamily.repository.PersonRepository;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -24,14 +23,14 @@ public class PeopleService {
         this.personMapper = personMapper;
         this.personEntityMapper = personEntityMapper;
         this.personRepository = personRepository;
-		this.personValidator = personValidator;
-	}
+        this.personValidator = personValidator;
+    }
 
     public boolean anyPersonIsValid() {
         return personRepository.findAll().stream()
-				.map(personMapper::mapFrom)
-				.filter(personValidator::hasPartner)
-				.filter(personValidator::hasThreeChildrenWithPartnerAsParent)
+                .map(personMapper::mapFrom)
+                .filter(personValidator::hasPartner)
+                .filter(personValidator::hasThreeChildrenWithPartnerAsParent)
                 .anyMatch(personValidator::hasOneChildUnderEighteen);
     }
 

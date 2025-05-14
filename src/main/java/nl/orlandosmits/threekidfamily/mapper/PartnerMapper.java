@@ -4,7 +4,6 @@ import java.util.Objects;
 import nl.orlandosmits.threekidfamily.domain.Partner;
 import nl.orlandosmits.threekidfamily.dto.request.PeopleRequestDto;
 import nl.orlandosmits.threekidfamily.entity.PersonEntity;
-
 import org.springframework.stereotype.Component;
 
 @Component
